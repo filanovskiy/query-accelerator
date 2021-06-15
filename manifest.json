@@ -1,0 +1,15 @@
+{
+    "workshoptitle": "Processing external datasets with ADW",
+    "include": {"starter-file.sql":"../../files/starter-file.sql",
+                "sample.json":"../../files/sample.json",
+                "injected-step.md":"../../files/injected-step.md"},
+      "help": "livelabs-help-db_us@oracle.com",
+      "tutorials": [
+        {
+            "title": "Quick Start guide",
+            "description": "This is the complete template for LiveLabs content developers",
+            "type": "livelabs",
+            "filename": "../../livelabs-template.md"
+        }
+    ]
+}
