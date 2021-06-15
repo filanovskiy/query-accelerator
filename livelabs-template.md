@@ -305,6 +305,7 @@ AND  cs.cust_id = c.cust_id
 AND  c.segment_id = s.segment_id;
 ```
 ## **Step 3:** Run Queries
+Note: the easiest way to run tests is using Cloud-Shell and SQL*Plus to connect to an ADW. Please refer to Learn More section at the bottom of this Lab for step by step guidance
 
 1. Prepare the view to monitor efficiency of offloading
 ```
@@ -350,6 +351,7 @@ cell interconnect bytes returned by XT smart scan                    367736
 cell XT granule predicate offload retries                                 0
 ```
 This data shows us that totally it were 43 granules (unit of work automatically defined by database), which is 3636585242 bytes (~3.6GB). 367736 bytes (~350KB) were transferred back to database, rest were illuminated on the storage level
+*Note: due a bug, this performance view will not work with SQL Developer Web*
 
 User also may wants to check fact of offload in SQL Monitor report:
     ![](images/plan.png)
@@ -481,3 +483,4 @@ This is one of the common use case, when user loads into database refined and cl
 ## Learn More
 * [Querying External Data with Autonomous Database](https://docs.oracle.com/en/cloud/paas/autonomous-database/adbsa/query-external.html#GUID-ABF95242-3E04-42FF-9361-52707D14E833)
 * [Provision ADW instance](https://docs.oracle.com/en/cloud/paas/autonomous-data-warehouse-cloud/tutorial-getting-started-autonomous-db-adw/index.html)
+* [Connecting SQL*Plus in Cloud Shell to an Autonomous Database](https://medium.com/oracledevs/connecting-sql-plus-in-cloud-shell-to-an-autonomous-database-1debeff5c396)
