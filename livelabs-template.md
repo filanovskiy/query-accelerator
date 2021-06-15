@@ -2,12 +2,12 @@
 
 ## Introduction
 
-This lab walks you through the Steps to try ADW external processing capabilities. You will create metadata Objects on top of shared dataset and run set of the queries
+This lab walks you through the Steps to try ADB query accelerator. You will create metadata Objects on top of shared dataset and run set of the queries
 
 Estimated Lab Time: 20 minutes
 
 ### Background
-Oracle Autonomous Database was able to query external dataset for quite some time. Recently product team introduced acceleration feature for this, which allows to run the same queries without any code change way faster.
+Oracle Autonomous Database was able to query external dataset for quite some time. Recently product team introduced acceleration feature for this, which allows to run the same queries without any code change, but way faster.
 
 ### Objectives
 
@@ -18,9 +18,10 @@ In this lab, you will:
 
 ### Prerequisites
 
-* An Oracle Cloud Account - Please view this workshop's LiveLabs landing page to see which environments are supported
+* An Oracle Cloud Account
 * Pre-created ADW with 4 OCPUs (this is recommended, but not mandatory number)
 * ADW auto-scale feature should be enabled
+    ![](images/auto-scale.png)
 
 ## **Step 1 (Optional)**: Create User
 To run this Quick Start guide there is recommendation to create dedicated account. It will help isolate testing from other database activities
@@ -154,7 +155,7 @@ END;
 Here is the list of the tables
     ![](images/ext_tables.png)
 
-4. after tables been created, check actual DDL:
+4. After tables been created, check actual DDL:
 ```
 select dbms_metadata.get_ddl('TABLE','EXT_CUSTSALES','DEMO_USER') from DUAL;
 ----------------------------------------------------------------------------
