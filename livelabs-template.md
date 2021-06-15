@@ -34,7 +34,7 @@ GRANT DWROLE TO demo_user;
 GRANT ALTER SESSION TO demo_user;
 GRANT UNLIMITED TABLESPACE TO demo_user;
 -- Enable REST endpoint for be able to use SQL Developer Web
-BEGIN  Developer Web
+BEGIN
     ords_admin.enable_schema (
         p_enabled               => TRUE,
         p_schema                => 'DEMO_USER',
