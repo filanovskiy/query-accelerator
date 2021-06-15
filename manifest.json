@@ -8,7 +8,7 @@
         {
             "title": "Quick Start guide",
             "type": "livelabs",
-            "filename": "livelabs-template.md"
+            "filename": "./livelabs-template.md"
         }
     ]
 }
