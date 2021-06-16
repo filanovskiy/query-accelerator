@@ -6,8 +6,9 @@ This lab walks you through the Steps to try ADB query accelerator. You will crea
 
 Estimated Lab Time: 20 minutes
 
-### Background
-Oracle Autonomous Database was able to query external dataset for quite some time. Recently product team introduced acceleration feature for this, which allows to run the same queries without any code change, but way faster.
+### Background and value proposition
+Oracle Autonomous Database was able to query external dataset for quite some time. Recently product team introduced acceleration feature for this, which allows to run the same queries without any code change, but way faster and at scale (on top of big volumes of data).
+In case Oracle Cloud Infrastructure (OCI) user has existing Object Store based Data Lake, this feature can be used for ADB integration with Data Lake
 
 ### Objectives
 
