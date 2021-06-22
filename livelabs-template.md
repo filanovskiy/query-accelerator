@@ -112,7 +112,7 @@ BEGIN
     dbms_cloud.create_external_table(
         table_name => 'ext_customer',
         file_uri_list => '&uri_root/customer/*.csv',
-        format => '&csv_format',
+        format => '{"dateformat":"YYYY-MM-DD", "skipheaders":"1", "delimiter":",", "removequotes":"true", "blankasnull":"true", "trimspaces":"lrtrim", "ignoremissingcolumns":"true"}',
         column_list => 'CUST_ID	NUMBER,
                         LAST_NAME	VARCHAR2(200 BYTE),
                         FIRST_NAME	VARCHAR2(200 BYTE),
