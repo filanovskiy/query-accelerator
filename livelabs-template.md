@@ -212,7 +212,7 @@ select
     cast(m.doc.crew as varchar2(4000 byte)) as crew,
     cast(m.doc.main_subject as varchar2(4000 byte)) as main_subject,
     cast(m.doc.awards as varchar2(4000 byte)) as awards,
-    cast(m.doc.runtime as number) as runtime,
+    cast(m.doc.runtime as number) as runtime
 from ext_movie m;
 ```
 After data loading, new structure will looks like this:
