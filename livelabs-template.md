@@ -330,7 +330,7 @@ WHERE
 ```
 CREATE OR REPLACE VIEW XT_STAT AS
     SELECT
-        'average granule size'  NAME,
+        'average granule size, MB'  NAME,
         ROUND(
             (
                 SELECT
@@ -352,7 +352,7 @@ CREATE OR REPLACE VIEW XT_STAT AS
         DUAL
     UNION ALL
     SELECT
-        'percent of data returned to database %'  NAME,
+        'percent of data returned to database, %'  NAME,
         ROUND(
             (
                 SELECT
