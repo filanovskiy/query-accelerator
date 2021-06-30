@@ -331,52 +331,27 @@ WHERE
 CREATE OR REPLACE VIEW XT_STAT AS
     SELECT
         'average granule size, MB'  NAME,
-        ROUND(
-            (
-                SELECT
-                    VALUE / 1024 / 1024
-                FROM
-                    XT_STAT_RAW
-                WHERE
-                    NAME = 'cell XT granule bytes requested for predicate offload'
-            ) /(
-                SELECT
-                    VALUE
-                FROM
-                    XT_STAT_RAW
-                WHERE
-                    NAME = 'cell XT granules requested for predicate offload'
-            ), 2
-        )                       VALUE
-    FROM
-        DUAL
+        ROUND((SELECT VALUE / 1024 / 1024
+                FROM XT_STAT_RAW
+                WHERE NAME = 'cell XT granule bytes requested for predicate offload')/(
+                SELECT VALUE
+                FROM XT_STAT_RAW
+                WHERE NAME = 'cell XT granules requested for predicate offload'
+            ),2) VALUE
+    FROM DUAL
     UNION ALL
     SELECT
         'percent of data returned to database, %'  NAME,
-        ROUND(
-            (
-                SELECT
-                    VALUE
-                FROM
-                    XT_STAT_RAW
-                WHERE
-                    NAME = 'cell interconnect bytes returned by XT smart scan'
-            ) /(
-                SELECT
-                    VALUE
-                FROM
-                    XT_STAT_RAW
-                WHERE
-                    NAME = 'cell XT granule bytes requested for predicate offload'
-            ) * 100, 2
-        )                                         VALUE
-    FROM
-        DUAL
+        ROUND((SELECT VALUE
+                FROM XT_STAT_RAW
+                WHERE NAME = 'cell interconnect bytes returned by XT smart scan'
+            )/(SELECT VALUE
+                FROM XT_STAT_RAW
+                WHERE NAME = 'cell XT granule bytes requested for predicate offload')*100, 2) VALUE
+    FROM DUAL
     UNION ALL
-    SELECT
-        *
-    FROM
-        XT_STAT_RAW;
+    SELECT *
+    FROM XT_STAT_RAW;
 ```
 2. Despite on processing done outside of database the core optimizer is still sits into Oracle database, so it's critical to gather statistics to get optimal query execution plan
 ```
