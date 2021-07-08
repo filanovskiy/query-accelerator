@@ -329,29 +329,29 @@ WHERE
 
 ```
 CREATE OR REPLACE VIEW XT_STAT AS
-    SELECT
-        'average granule size, MB'  NAME,
-        ROUND((SELECT VALUE / 1024 / 1024
-                FROM XT_STAT_RAW
-                WHERE NAME = 'cell XT granule bytes requested for predicate offload')/(
-                SELECT VALUE
-                FROM XT_STAT_RAW
-                WHERE NAME = 'cell XT granules requested for predicate offload'
-            ),2) VALUE
-    FROM DUAL
-    UNION ALL
-    SELECT
-        'percent of data returned to database, %'  NAME,
-        ROUND((SELECT VALUE
-                FROM XT_STAT_RAW
-                WHERE NAME = 'cell interconnect bytes returned by XT smart scan'
-            )/(SELECT VALUE
-                FROM XT_STAT_RAW
-                WHERE NAME = 'cell XT granule bytes requested for predicate offload')*100, 2) VALUE
-    FROM DUAL
-    UNION ALL
-    SELECT *
-    FROM XT_STAT_RAW;
+SELECT
+    'average granule size, MB'  NAME,
+    ROUND((SELECT VALUE / 1024 / 1024
+            FROM XT_STAT_RAW
+            WHERE NAME = 'cell XT granule bytes requested for predicate offload')/nvl((
+            SELECT VALUE
+            FROM XT_STAT_RAW
+            WHERE NAME = 'cell XT granules requested for predicate offload'
+        ),1),2) VALUE
+FROM DUAL
+UNION ALL
+SELECT
+    'percent of data returned to database, %'  NAME,
+    ROUND((SELECT VALUE
+            FROM XT_STAT_RAW
+            WHERE NAME = 'cell interconnect bytes returned by XT smart scan'
+        )/nvl((SELECT VALUE
+            FROM XT_STAT_RAW
+            WHERE NAME = 'cell XT granule bytes requested for predicate offload'),1)*100, 2) VALUE
+FROM DUAL
+UNION ALL
+SELECT *
+FROM XT_STAT_RAW;
 ```
 2. Despite on processing done outside of database the core optimizer is still sits into Oracle database, so it's critical to gather statistics to get optimal query execution plan
 ```
@@ -374,9 +374,11 @@ select * from xt_stat;
 
 NAME                                                                  VALUE
 ---------------------------------------------------------------- ----------
-cell XT granules requested for predicate offload                         43
-cell XT granule bytes requested for predicate offload            3636585242
-cell interconnect bytes returned by XT smart scan                    367736
+average granule size, MB                                              79.29
+percent of data returned to database, %                                 .01
+cell XT granules requested for predicate offload                         63
+cell XT granule bytes requested for predicate offload            5237678542
+cell interconnect bytes returned by XT smart scan                    538776
 cell XT granule predicate offload retries                                 0
 ```
 This data shows us that totally it were 43 granules (unit of work automatically defined by database), which is 3636585242 bytes (~3.6GB). 367736 bytes (~350KB) were transferred back to database, rest were illuminated on the storage level
