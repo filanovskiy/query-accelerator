@@ -511,6 +511,60 @@ group by m.doc.studio
 ```
 This is one of the common use case, when user loads into database refined and cleaned data, while leave into Object Store detailed data, which always can be used on demand
 
+2. Schema drift. It's quite common in data lake environment when data schema is evaluating and new columns added into the file, while some maybe removed. It's very common for intelligent file format, such as Parquet, ORC, Avro, because they have schema inside the file:
+```
+$ parquet-tools schema col2.parq
+message hive_schema {
+  optional int64 d_date_sk;
+  optional binary d_date_id (UTF8);
+}
+```
+ADW supports schema drift scenarios. First because of bug, which should be fixed soon, user needs to create some credential. This lab uses publicly available files and it's why you may put any values into this credentials:
+```
+begin
+DBMS_CLOUD.create_credential (
+credential_name => 'EMPTY_CRED',
+username => 'none@oracle.com',
+    password => 'NOPASSWORD'
+) ;
+end;
+/
+```
+After credentials been created, you can run create table statement:
+```
+define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db'
+begin
+ dbms_cloud.create_external_table(
+        credential_name => 'EMPTY_CRED',
+        table_name => 'SCHEMA_DRIFT',
+        file_uri_list => '&uri_root/schema_drift_parq/col2.parq',
+        format => '{"type":"parquet","schema":"all"}');
+end;
+```
+
+The beauty of Parquet/ORC/Avro files are that they contain schema definition inside a file and there is no need to define column names or format. You can check data now:
+```
+select * from SCHEMA_DRIFT;
+```
+Assume couple more files were added into this directory (it's hard to implement for this lab, so we just will change URI). You want to redefine table:
+```
+define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db'
+drop table SCHEMA_DRIFT;
+begin
+ dbms_cloud.create_external_table(
+        credential_name => 'EMPTY_CRED',
+        table_name => 'SCHEMA_DRIFT',
+        file_uri_list => '&uri_root/schema_drift_parq/*.parq',
+        format => '{"type":"parquet","schema":"all"}');
+end;
+```
+After table been created, you can check new datasets:
+```
+select * from SCHEMA_DRIFT;
+```
+User can see all rows, although for some rows there are NULL columns
+
+
 ## Learn More
 * [Querying External Data with Autonomous Database](https://docs.oracle.com/en/cloud/paas/autonomous-database/adbsa/query-external.html#GUID-ABF95242-3E04-42FF-9361-52707D14E833)
 * [Provision ADW instance](https://docs.oracle.com/en/cloud/paas/autonomous-data-warehouse-cloud/tutorial-getting-started-autonomous-db-adw/index.html)
