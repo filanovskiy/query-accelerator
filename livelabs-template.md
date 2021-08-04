@@ -353,6 +353,8 @@ UNION ALL
 SELECT *
 FROM XT_STAT_RAW;
 ```
+Note: due some bug the first run can show all 0. Until bug get fixed, run a query second time.
+
 2. Despite on processing done outside of database the core optimizer is still sits into Oracle database, so it's critical to gather statistics to get optimal query execution plan
 ```
 BEGIN
