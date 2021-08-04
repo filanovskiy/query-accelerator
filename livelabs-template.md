@@ -333,11 +333,10 @@ SELECT
     'average granule size, MB'  NAME,
     ROUND((SELECT VALUE / 1024 / 1024
             FROM XT_STAT_RAW
-            WHERE NAME = 'cell XT granule bytes requested for predicate offload')/nvl((
+            WHERE NAME = 'cell XT granule bytes requested for predicate offload')/replace((
             SELECT VALUE
             FROM XT_STAT_RAW
-            WHERE NAME = 'cell XT granules requested for predicate offload'
-        ),1),2) VALUE
+            WHERE NAME = 'cell XT granules requested for predicate offload'),0,1),2) VALUE
 FROM DUAL
 UNION ALL
 SELECT
@@ -345,9 +344,10 @@ SELECT
     ROUND((SELECT VALUE
             FROM XT_STAT_RAW
             WHERE NAME = 'cell interconnect bytes returned by XT smart scan'
-        )/nvl((SELECT VALUE
+        )/replace((
+            SELECT VALUE
             FROM XT_STAT_RAW
-            WHERE NAME = 'cell XT granule bytes requested for predicate offload'),1)*100, 2) VALUE
+            WHERE NAME = 'cell XT granules requested for predicate offload'),0,1) *100, 2) VALUE
 FROM DUAL
 UNION ALL
 SELECT *
