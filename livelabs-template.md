@@ -347,7 +347,7 @@ SELECT
         )/replace((
             SELECT VALUE
             FROM XT_STAT_RAW
-            WHERE NAME = 'cell XT granules requested for predicate offload'),0,1) *100, 2) VALUE
+            WHERE NAME = 'cell XT granule bytes requested for predicate offload'),0,1) * 100, 2) VALUE
 FROM DUAL
 UNION ALL
 SELECT *
