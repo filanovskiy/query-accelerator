@@ -377,13 +377,14 @@ select * from xt_stat;
 NAME                                                                  VALUE
 ---------------------------------------------------------------- ----------
 average granule size, MB                                              79.29
-percent of data returned to database, %                                 .01
+percent of data returned to database, %                                   0
 cell XT granules requested for predicate offload                         63
 cell XT granule bytes requested for predicate offload            5237678542
-cell interconnect bytes returned by XT smart scan                    538776
+cell interconnect bytes returned by XT smart scan                         0
 cell XT granule predicate offload retries                                 0
 ```
-This data shows us that totally it were 43 granules (unit of work automatically defined by database), which is 3636585242 bytes (~3.6GB). 367736 bytes (~350KB) were transferred back to database, rest were illuminated on the storage level
+This data shows us that totally it were 63 granules (unit of work automatically defined by database), which is 5237678542 bytes in total (~5GB). All compute were done on a storage level.
+
 *Note: due a bug, this performance view will not work with SQL Developer Web*
 
 User also may wants to check fact of offload in SQL Monitor report:
