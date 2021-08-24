@@ -22,7 +22,7 @@ In this lab, you will:
 
 * An Oracle Cloud Account
 * Pre-created ADW with 4 OCPUs (this is recommended, but not mandatory number)
-* ADW auto-scale feature should be enabled
+* ADW **auto-scale** feature should be **enabled**
     ![](images/auto-scale.png)
 
 ## **Step 1 (Optional)**: Create User
