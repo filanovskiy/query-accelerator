@@ -4,7 +4,7 @@
 
 This lab walks you through the Steps to try ADB query accelerator. You will create metadata Objects on top of shared dataset and run set of the queries
 
-Estimated Lab Time: 20 minutes
+Estimated Lab Time: 30 minutes
 
 ### Background and value proposition
 Oracle Autonomous Database was able to query external dataset for quite some time. Recently product team introduced acceleration feature for this, which allows to run the same queries without any code change, but way faster and at scale (on top of big volumes of data).
