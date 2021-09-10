@@ -565,6 +565,7 @@ After table been created, you can check new datasets:
 ```
 select * from SCHEMA_DRIFT;
 ```
+and observe some NULLs in files with old schema
     ![](images/drift.png)
 User can see all rows, although for some rows there are NULL columns
 
