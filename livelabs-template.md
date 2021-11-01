@@ -65,7 +65,7 @@ grant SELECT ON DBA_RSRC_CONSUMER_GROUP_PRIVS to DEMO_USER;
 
 1. Explore Objects available in the public bucket. These dataset are owned by Oracle and hosted in Oracle's tenancy. It shows sales and customers data for fiction video content provider called Movieplex
 ```
-define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db'
+define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/oraclebigdatadb/b/movieplex/o/workshop.db'
 SELECT * FROM DBMS_CLOUD.LIST_OBJECTS(location_uri => '&uri_root/');
 ```
 In a SQL Developer Web it will looks like:
@@ -73,14 +73,14 @@ In a SQL Developer Web it will looks like:
 2. Preview data
 Data is stored in a plain file format and available though a REST interface. User can run standard curl command from bash environment to preview data
 ```
-$ curl https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db/custsales/month=2019-01/custsales-2019-01.csv|head
+$ curl https://objectstorage.us-ashburn-1.oraclecloud.com/n/oraclebigdatadb/b/movieplex/o/workshop.db/custsales/month=2019-01/custsales-2019-01.csv|head
 ```
 Example of output:
     ![](images/curl2.png)
 
 3. Create set of the external tables, mapped to the public bucket
 ```
-define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db'
+define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/oraclebigdatadb/b/movieplex/o/workshop.db'
 define csv_format = '{"dateformat":"YYYY-MM-DD", "skipheaders":"1", "delimiter":",", "removequotes":"true"}'
 define json_format = '{"skipheaders":"0", "ignoreblanklines":"true"}'
 
@@ -188,7 +188,7 @@ com.oracle.bigdata.removequotes=true
 com.oracle.bigdata.trimspaces=notrim
   )
       LOCATION
-       ( 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db/custsales/*.csv'
+       ( 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/oraclebigdatadb/b/movieplex/o/workshop.db/custsales/*.csv'
        )
     )
    REJECT LIMIT 0
@@ -535,7 +535,7 @@ end;
 ```
 After credentials been created, you can run create table statement:
 ```
-define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db'
+define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/oraclebigdatadb/b/movieplex/o/workshop.db'
 begin
  dbms_cloud.create_external_table(
         credential_name => 'EMPTY_CRED',
@@ -551,7 +551,7 @@ select * from SCHEMA_DRIFT;
 ```
 Assume couple more files were added into this directory (it's hard to implement for this lab, so we just will change URI). You want to redefine table:
 ```
-define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/p/uwVf4H9xZ_k2ywUDrkW5u6mQJhHKJsrVAVI0Ly7VBQrzEWXP_ScLGuD-iLZXkF0Q/n/oraclebigdatadb/b/movieplex/o/workshop.db'
+define uri_root = 'https://objectstorage.us-ashburn-1.oraclecloud.com/n/oraclebigdatadb/b/movieplex/o/workshop.db'
 drop table SCHEMA_DRIFT;
 begin
  dbms_cloud.create_external_table(
